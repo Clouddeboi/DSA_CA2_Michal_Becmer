@@ -18,6 +18,15 @@ int main() {
     tree.add(p2);
     tree.add(p3);
 
+    //Test traverseInOrder with stack-based traversal
+    cout << "In-order traversal (stack-based): " << endl;
+    tree.traverseInOrder([](BSTNode<Pair<int, string>>* node) 
+        {
+        //Print each node's key-value pair during traversal
+        cout << node->getItem().getFirst() << " : " << node->getItem().getSecond() << endl;
+        }
+    );
+
     //Print in-order traversal
     cout << "In-order Traversal:" << endl;
     tree.printInOrder();

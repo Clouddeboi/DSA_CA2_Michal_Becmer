@@ -1,8 +1,11 @@
 #pragma once
 #include "BSTNode.h"
-#include "Pair.h"  //Include Pair.h for the Pair class
+#include "Pair.h"
 #include <vector>
 #include <iostream>
+#include <stack> 
+#include <functional>
+
 using namespace std;
 
 template <class T>
@@ -26,6 +29,7 @@ public:
     void printPreOrder(BSTNode<T>* node);
     void printPostOrder();//prints items in post order
     void printPostOrder(BSTNode<T>* node);
+    void traverseInOrder(std::function<void(BSTNode<T>*)> callback);
     T* toArray();
     ~BinaryTree();//Destructor
 };
@@ -227,3 +231,29 @@ void BinaryTree<T>::printPostOrder(BSTNode<T>* node) {
         cout << node->getItem() << " ";//Print the item using overloaded <<
     }
 }
+
+template <class T>
+void BinaryTree<T>::traverseInOrder(std::function<void(BSTNode<T>*)> visit) {
+    if (root == nullptr) return;//If the tree is empty, do nothing
+
+    std::stack<BSTNode<T>*> nodeStack;//Stack to hold nodes
+    BSTNode<T>* current = root;
+
+    while (!nodeStack.empty() || current != nullptr) {
+        //Reach the leftmost node of the current node
+        while (current != nullptr) {
+            nodeStack.push(current);
+            current = current->getLeft();
+        }
+
+        //Current must be nullptr at this point; process the top node
+        current = nodeStack.top();
+        nodeStack.pop();
+
+        visit(current);//Call the visit function on the current node
+
+        //Move to the right subtree
+        current = current->getRight();
+    }
+}
+

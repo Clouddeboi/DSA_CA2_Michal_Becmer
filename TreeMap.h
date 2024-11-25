@@ -18,6 +18,7 @@ public:
     void printInOrder();//Print all key-value pairs in order
     void printPreOrder();//Print all key-value pairs in pre-order
     void printPostOrder();//Print all key-value pairs in post-order
+    BinaryTree<K> keySet();
 };
 
 template <class K, class V>
@@ -80,3 +81,23 @@ template <class K, class V>
 void TreeMap<K, V>::printPostOrder() {
     tree.printPostOrder();//Print post-order
 }
+
+template <class K, class V>
+BinaryTree<K> TreeMap<K, V>::keySet() {
+    BinaryTree<K> keysTree;//Create a new BinaryTree to store the keys
+
+    //function to traverse the tree recursively
+    std::function<void(BSTNode<Pair<K, V>>*)> traverse = [&](BSTNode<Pair<K, V>>* node) 
+        {
+        if (node != nullptr) {
+            traverse(node->getLeft());//Visit left subtree
+            keysTree.add(node->getItem().getFirst());//Add the key to keysTree
+            traverse(node->getRight());//Visit right subtree
+        }
+        };
+
+    traverse(tree.root);//Start traversal from the root of the binary tree
+    return keysTree;//Return the BinaryTree containing the keys
+}
+
+
