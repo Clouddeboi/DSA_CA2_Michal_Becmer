@@ -1,51 +1,75 @@
 #include <iostream>
-#include "BinaryTree.h" 
-#include "RPGCharacter.h"
+#include "BinaryTree.h"
+#include "Pair.h"
 
 using namespace std;
 
-/*
-    Project Idea:
-    I will create RPG characters with 6 fields those being:
-    ID
-    Name
-    Element
-    HP
-    Attack
-    Defense
+int main() {
+    BinaryTree<Pair<int, string>> tree;
 
-    I will sort all the characters by name alphabeitaclly
-*/
+    //objects for testing
+    Pair<int, string> p1(1, "One");
+    Pair<int, string> p2(2, "Two");
+    Pair<int, string> p3(3, "Three");
+    Pair<int, string> p4(4, "Four");
 
-int main()
-{
-    //Sample RPG characters for testing
-    RPGCharacter character1(1, "Warrior", "Fire", 100, 20, 10);
-    RPGCharacter character2(2, "Mage", "Water", 80, 15, 8);
-    RPGCharacter character3(3, "Archer", "Air", 90, 18, 12);
+    //Add pairs to the binary tree
+    tree.add(p1);
+    tree.add(p2);
+    tree.add(p3);
 
-    //Instance of Binary tree for my RPG Characters
-    BinaryTree<RPGCharacter> myTree;
+    //Print in-order traversal
+    cout << "In-order Traversal:" << endl;
+    tree.printInOrder();
+    cout << endl;
 
-    //adding characters to the tree
-    myTree.add(character1);
-    myTree.add(character2);
-    myTree.add(character3);
+    //Print pre-order traversal
+    cout << "Pre-order Traversal:" << endl;
+    tree.printPreOrder();
+    cout << endl;
 
-    //printing eveyrthing out
-    cout << "Data added to the tree successfully!\n" << endl;
+    //Print post-order traversal
+    cout << "Post-order Traversal:" << endl;
+    tree.printPostOrder();
+    cout << endl;
 
-    //Print the characters in order (sorted by name)
-    cout << "In-Order Traversal (Sorted by Name):" << endl;
-    myTree.printInOrder();
+    //Check the size of the tree
+    cout << "Size of the tree: " << tree.count() << endl;
 
-    //Print the characters in pre-order (sorted by name)
-    cout << "Pre-Order Traversal (Names):" << endl;
-    myTree.printPreOrder();
+    //Retrieve a specific pair using its key
+    try {
+        Pair<int, string>& found = tree.get(p2);  //Get Pair with key 2
+        cout << "Retrieved Pair: " << found << endl;
+    }
+    catch (logic_error& e) {
+        cout << e.what() << endl;
+    }
 
-    //Print the characters in post-order (sorted by name)
-    cout << "Post-Order Traversal (Names):" << endl;
-    myTree.printPostOrder();
+    //Remove 2 from the tree
+    tree.remove(p2);
+    cout << "In-order Traversal after removal:" << endl;
+    tree.printInOrder();
+    cout << endl;
+
+
+    //Adding element
+    tree.add(p4);
+
+    //Print in-order traversal after adding a new element
+    cout << "In-order Traversal after adding (4, Four):" << endl;
+    tree.printInOrder();
+    cout << endl;
+
+    //Clear the tree
+    cout << "Clearing the tree..." << endl;
+    tree.clear();
+
+    //Check the size after clearing
+    cout << "Size of the tree after clearing: " << tree.count() << endl;
+
+    //Try printing after clearing
+    cout << "In-order Traversal after clearing:" << endl;
+    tree.printInOrder();
 
     return 0;
 }
