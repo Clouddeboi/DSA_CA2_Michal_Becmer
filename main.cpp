@@ -1,33 +1,50 @@
 #include <iostream>
 #include "BinaryTree.h" 
+#include "RPGCharacter.h"
 
 using namespace std;
 
+/*
+    Project Idea:
+    I will create RPG characters with 6 fields those being:
+    ID
+    Name
+    Element
+    HP
+    Attack
+    Defense
+
+    I will sort all the characters by name alphabeitaclly
+*/
+
 int main()
 {
-    //Instance of binary tree for ints
-    BinaryTree<int> myTree;
-    
-    //test data
-    int data1 = 10;
-    int data2 = 20;
-    int data3 = 5;
+    //Sample RPG characters for testing
+    RPGCharacter character1(1, "Warrior", "Fire", 100, 20, 10);
+    RPGCharacter character2(2, "Mage", "Water", 80, 15, 8);
+    RPGCharacter character3(3, "Archer", "Air", 90, 18, 12);
 
-    //adding test data to the tree
-    myTree.add(data1);
-    myTree.add(data2);
-    myTree.add(data3);
+    //Instance of Binary tree for my RPG Characters
+    BinaryTree<RPGCharacter> myTree;
+
+    //adding characters to the tree
+    myTree.add(character1);
+    myTree.add(character2);
+    myTree.add(character3);
 
     //printing eveyrthing out
-    cout << "Data added to the tree successfully!" << endl;
+    cout << "Data added to the tree successfully!\n" << endl;
 
-    cout << "In-Order Traversal:" << endl;
+    //Print the characters in order (sorted by name)
+    cout << "In-Order Traversal (Sorted by Name):" << endl;
     myTree.printInOrder();
 
-    cout << "Pre-Order Traversal:" << endl;
+    //Print the characters in pre-order (sorted by name)
+    cout << "Pre-Order Traversal (Names):" << endl;
     myTree.printPreOrder();
 
-    cout << "Post-Order Traversal:" << endl;
+    //Print the characters in post-order (sorted by name)
+    cout << "Post-Order Traversal (Names):" << endl;
     myTree.printPostOrder();
 
     return 0;

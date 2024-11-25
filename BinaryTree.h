@@ -211,7 +211,7 @@ void BinaryTree<T>::printInOrder()
 	cout << endl;
 }
 template<class T>
-void BinaryTree<T>::printInOrder(BSTNode<T>* node)
+void BinaryTree<T>::printInOrder(BSTNode<T>* node) 
 {
 	//if the next node is a nullptr it stops the method
 	if (node == nullptr)
@@ -220,12 +220,13 @@ void BinaryTree<T>::printInOrder(BSTNode<T>* node)
 	//Visit the left subtree
 	printInOrder(node->getLeft());
 
-	//Print the current node's data
-	cout << node->getItem() << " ";
+	//Print the current node's item (RPGCharacter), we get the .name since we want to sort them alphabetically
+	cout << node->getItem().name << endl;
 
 	//Visit the right subtree
 	printInOrder(node->getRight());
 }
+
 
 template<class T>
 void BinaryTree<T>::printPreOrder()
@@ -233,6 +234,7 @@ void BinaryTree<T>::printPreOrder()
 	this->printPreOrder(root);
 	cout << endl;
 }
+//we print them before they are sorted
 template<class T>
 void BinaryTree<T>::printPreOrder(BSTNode<T>* node)
 {
@@ -240,8 +242,8 @@ void BinaryTree<T>::printPreOrder(BSTNode<T>* node)
 	if (node == nullptr)
 		return;
 
-	//Print the current node's data
-	cout << node->getItem() << " ";
+	//Print the current node's character's name
+	cout << node->getItem().name << endl;
 
 	//Visit the left subtree
 	printPreOrder(node->getLeft());
@@ -258,18 +260,17 @@ void BinaryTree<T>::printPostOrder()
 	cout << endl;
 }
 template<class T>
-void BinaryTree<T>::printPostOrder(BSTNode<T>* node)
-{
+void BinaryTree<T>::printPostOrder(BSTNode<T>* node) {
 	//if the next node is a nullptr it stops the method
 	if (node == nullptr)
 		return;
 
-	//Visit the left subtree
+	//Visit the left subtree first
 	printPostOrder(node->getLeft());
 
 	//Visit the right subtree
 	printPostOrder(node->getRight());
 
-	//Print the current node's data
-	cout << node->getItem() << " ";
+	//Print the current node's name
+	cout << node->getItem().name << endl;
 }
