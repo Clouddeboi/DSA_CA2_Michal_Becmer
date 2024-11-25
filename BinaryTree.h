@@ -1,4 +1,4 @@
-c#pragma once
+#pragma once
 #include "BSTNode.h"
 //initial commit
 #include <vector>
@@ -213,7 +213,18 @@ void BinaryTree<T>::printInOrder()
 template<class T>
 void BinaryTree<T>::printInOrder(BSTNode<T>* node)
 {
+	//if the next node is a nullptr it stops the method
+	if (node == nullptr)
+		return;
 
+	//Visit the left subtree
+	printInOrder(node->getLeft());
+
+	//Print the current node's data
+	cout << node->getItem() << " ";
+
+	//Visit the right subtree
+	printInOrder(node->getRight());
 }
 
 template<class T>
@@ -225,9 +236,20 @@ void BinaryTree<T>::printPreOrder()
 template<class T>
 void BinaryTree<T>::printPreOrder(BSTNode<T>* node)
 {
+	//if the next node is a nullptr it stops the method
+	if (node == nullptr)
+		return;
 
+	//Print the current node's data
+	cout << node->getItem() << " ";
 
+	//Visit the left subtree
+	printPreOrder(node->getLeft());
+
+	//Visit the right subtree
+	printPreOrder(node->getRight());
 }
+
 
 template<class T>
 void BinaryTree<T>::printPostOrder()
@@ -238,5 +260,16 @@ void BinaryTree<T>::printPostOrder()
 template<class T>
 void BinaryTree<T>::printPostOrder(BSTNode<T>* node)
 {
+	//if the next node is a nullptr it stops the method
+	if (node == nullptr)
+		return;
 
+	//Visit the left subtree
+	printPostOrder(node->getLeft());
+
+	//Visit the right subtree
+	printPostOrder(node->getRight());
+
+	//Print the current node's data
+	cout << node->getItem() << " ";
 }
