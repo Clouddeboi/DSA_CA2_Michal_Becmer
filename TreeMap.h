@@ -36,20 +36,21 @@ template <class K, class V>
 V TreeMap<K, V>::get(const K& key) {
     Pair<K, V> pair(key, V());//Create a pair with the key and a default value
     Pair<K, V>& foundPair = tree.get(pair);//Get the pair from the tree
-    return foundPair.second;//Return the value part of the pair
+    return foundPair.getSecond();//Return the value part of the pair
 }
 
 template <class K, class V>
 bool TreeMap<K, V>::containsKey(const K& key) {
-    Pair<K, V> pair(key, V());//Create a pair with key
+    Pair<K, V> pair(key, V()); // Create a pair with the key
     try {
-        tree.get(pair);//Try to get the pair from the tree
+        tree.get(pair); // Try to get the pair from the tree
         return true;
     }
-    catch (const std::runtime_error&) {
-        return false;//If Key not found, catch error
+    catch (const std::logic_error&) { // Catch logic_error thrown by get()
+        return false; // If key not found, return false
     }
 }
+
 
 template <class K, class V>
 bool TreeMap<K, V>::remove(const K& key) {

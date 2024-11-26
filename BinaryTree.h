@@ -175,8 +175,9 @@ T* BinaryTree<T>::toArray() {
 
 template <class T>
 void BinaryTree<T>::clear() {
-    delete root;
-    root = nullptr;
+        // Delete the current root node
+        delete root;
+        root = nullptr;   
 }
 
 template <class T>
