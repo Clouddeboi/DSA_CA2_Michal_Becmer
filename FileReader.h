@@ -1,12 +1,10 @@
 #pragma once
-#include <vector>
+#include <string>
 #include "BinaryTree.h"
 #include "Pair.h"
-#include <fstream>  // For ifstream
-#include <iostream> // For standard input/output
-#include <string>   // For using std::string
-#include <sstream>  // For std::stringstream
-#include <stdexcept>
+#include <fstream>
+#include <iostream>
+#include <cctype>//For toupper
 
 using namespace std;
 
@@ -15,9 +13,6 @@ public:
     //Method to load words from a file into a BinaryTree
     void loadWordsToTree(const string& filename, BinaryTree<Pair<string, char>>& tree);
 
-    //Method to find a word by its index (position) in the BinaryTree
-    Pair<string, char>& findWordByIndex(int index, BinaryTree<Pair<string, char>>& tree);
-
-    //Method to find all words starting with a given letter
+    //Method to find words by their first letter in the tree
     void findWordsByIndex(char index, BinaryTree<Pair<string, char>>& tree);
 };
