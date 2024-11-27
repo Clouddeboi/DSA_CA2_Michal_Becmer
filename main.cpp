@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//Function to print the menu options
 void printMenu() {
     cout << "\nMenu:\n";
     cout << "1. Load words from file and populate the tree\n";
@@ -13,6 +14,7 @@ void printMenu() {
     cout << "4. Print Post-order Traversal\n";
     cout << "5. Check size of the tree\n";
     cout << "6. Clear the tree\n";
+    cout << "7. Find words by index (first letter)\n";
     cout << "9. Exit\n";
 }
 
@@ -24,76 +26,104 @@ int main() {
     int choice;
     string filename = "RandomWords.txt";  //The file containing words
 
-    while (true) {
+    while (true) 
+    {
         printMenu();  //Display the menu
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch (choice) {
-        case 1: {
-            //Load words from file
-            fileReader.loadWordsToTree(filename, tree);
-            treeLoaded = true;
-            cout << "Words loaded successfully into the tree.\n";
-            break;
-        }
-        case 2: {
-            if (treeLoaded) {
-                cout << "In-order Traversal:\n";
-                tree.printInOrder();  //Print the tree in-order
+        switch (choice) 
+        {
+            case 1: 
+            {
+                //Load words from file into the tree (BST)
+                fileReader.loadWordsToTree(filename, tree);
+                treeLoaded = true;
+                cout << "Words loaded successfully into the tree.\n";
+                break;
             }
-            else {
-                cout << "Tree is empty. Load words first.\n";
+            case 2: 
+            {
+                if (treeLoaded) 
+                {
+                    cout << "In-order Traversal:\n";
+                    tree.printInOrder();  //Print the tree in-order (sorted by first letter)
+                }
+                else 
+                {
+                    cout << "Tree is empty. Load words first.\n";
+                }
+                break;
             }
-            break;
-        }
-        case 3: {
-            if (treeLoaded) {
-                cout << "Pre-order Traversal:\n";
-                tree.printPreOrder();  //Print the tree in pre-order
+            case 3: 
+            {
+                if (treeLoaded) 
+                {
+                    cout << "Pre-order Traversal:\n";
+                    tree.printPreOrder();  //Print the tree in pre-order
+                }
+                else 
+                {
+                    cout << "Tree is empty. Load words first.\n";
+                }
+                break;
             }
-            else {
-                cout << "Tree is empty. Load words first.\n";
+            case 4: 
+            {
+                if (treeLoaded) 
+                {
+                    cout << "Post-order Traversal:\n";
+                    tree.printPostOrder();  //Print the tree in post-order
+                }
+                else 
+                {
+                    cout << "Tree is empty. Load words first.\n";
+                }
+                break;
             }
-            break;
-        }
-        case 4: {
-            if (treeLoaded) {
-                cout << "Post-order Traversal:\n";
-                tree.printPostOrder();  //Print the tree in post-order
+            case 5: 
+            {
+                if (treeLoaded) 
+                {
+                    cout << "Size of the tree: " << tree.count() << endl;  //Print the size of the tree
+                }
+                else 
+                {
+                    cout << "Tree is empty. Load words first.\n";
+                }
+                break;
             }
-            else {
-                cout << "Tree is empty. Load words first.\n";
-            }
-            break;
-        }
-        case 5: {
-            if (treeLoaded) {
-                cout << "Size of the tree: " << tree.count() << endl;  //Print the size of the tree
-            }
-            else {
-                cout << "Tree is empty. Load words first.\n";
-            }
-            break;
-        }
-        case 6: {
-            if (treeLoaded) {
+            case 6: 
+            {
                 //Clear the tree
                 tree.clear();
                 cout << "Tree cleared.\n";
                 treeLoaded = false;  //Reset the flag
+                break;
             }
-            else {
-                cout << "Tree is empty. Load words first.\n";
+            case 7: 
+            {
+                if (treeLoaded) 
+                {
+                    char index;
+                    cout << "Enter a letter (A-Z) to find words starting with that letter: ";
+                    cin >> index;
+                    index = toupper(index);  //Ensure the letter is uppercase
+                    fileReader.findWordsByIndex(index, tree);  //Find and display words starting with the specified letter
+                }
+                else 
+                {
+                    cout << "Tree is empty. Load words first.\n";
+                }
+                break;
             }
-            break;
-        }
-        case 9: {
-            cout << "Exiting program.\n";
-            return 0;  //Exit the program
-        }
-        default:
-            cout << "Invalid choice. Please try again.\n";
+            case 9: 
+            {
+                cout << "Exiting program.\n";
+                return 0;  //Exit the program
+            }
+            default:
+                cout << "Invalid choice. Please try again.\n";
         }
     }
 
