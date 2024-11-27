@@ -1,5 +1,7 @@
-Apple
-Bannana
-Orange
-Grape
-Pear
+Fire
+Water
+Earth
+Magic
+Wind
+Poison
+Madness

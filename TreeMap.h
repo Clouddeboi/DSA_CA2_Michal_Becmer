@@ -88,17 +88,16 @@ BinaryTree<K> TreeMap<K, V>::keySet() {
     BinaryTree<K> keysTree;//Create a new BinaryTree to store the keys
 
     //function to traverse the tree recursively
-    std::function<void(BSTNode<Pair<K, V>>*)> traverse = [&](BSTNode<Pair<K, V>>* node) 
+    std::function<void(BSTNode<Pair<K, V>>*)> traverse = [&](BSTNode<Pair<K, V>>* node)
         {
-        if (node != nullptr) {
-            traverse(node->getLeft());//Visit left subtree
-            keysTree.add(node->getItem().getFirst());//Add the key to keysTree
-            traverse(node->getRight());//Visit right subtree
-        }
+            if (node != nullptr) {
+                traverse(node->getLeft());//Visit left subtree
+                keysTree.add(node->getItem().getFirst());//Add the key to keysTree
+                traverse(node->getRight());//Visit right subtree
+            }
         };
 
     traverse(tree.root);//Start traversal from the root of the binary tree
     return keysTree;//Return the BinaryTree containing the keys
 }
-
 

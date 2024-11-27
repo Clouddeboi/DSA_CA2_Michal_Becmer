@@ -5,104 +5,97 @@
 
 using namespace std;
 
+void printMenu() {
+    cout << "\nMenu:\n";
+    cout << "1. Load words from file and populate the tree\n";
+    cout << "2. Print In-order Traversal\n";
+    cout << "3. Print Pre-order Traversal\n";
+    cout << "4. Print Post-order Traversal\n";
+    cout << "5. Check size of the tree\n";
+    cout << "6. Clear the tree\n";
+    cout << "9. Exit\n";
+}
+
 int main() {
+    BinaryTree<Pair<string, char>> tree;  //Create a BinaryTree for storing words and their first letters
+    FileReader fileReader;  //FileReader object to load words from file
+    bool treeLoaded = false;  //Flag to check if words are loaded into the tree
 
-    // Create a FileReader instance
-    FileReader fileReader;
+    int choice;
+    string filename = "RandomWords.txt";  //The file containing words
 
-    // Read words from the file
-    vector<string> words = fileReader.readWordsFromFile("RandomWords.txt");
+    while (true) {
+        printMenu();  //Display the menu
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-    // Check if the words vector is not empty and print the words
-    if (words.empty()) {
-        cout << "No words were read from the file." << endl;
-    }
-    else {
-        cout << "Words read from the file:" << endl;
-        for (const string& word : words) {
-            cout << word << endl;  // Print each word
+        switch (choice) {
+        case 1: {
+            //Load words from file
+            fileReader.loadWordsToTree(filename, tree);
+            treeLoaded = true;
+            cout << "Words loaded successfully into the tree.\n";
+            break;
+        }
+        case 2: {
+            if (treeLoaded) {
+                cout << "In-order Traversal:\n";
+                tree.printInOrder();  //Print the tree in-order
+            }
+            else {
+                cout << "Tree is empty. Load words first.\n";
+            }
+            break;
+        }
+        case 3: {
+            if (treeLoaded) {
+                cout << "Pre-order Traversal:\n";
+                tree.printPreOrder();  //Print the tree in pre-order
+            }
+            else {
+                cout << "Tree is empty. Load words first.\n";
+            }
+            break;
+        }
+        case 4: {
+            if (treeLoaded) {
+                cout << "Post-order Traversal:\n";
+                tree.printPostOrder();  //Print the tree in post-order
+            }
+            else {
+                cout << "Tree is empty. Load words first.\n";
+            }
+            break;
+        }
+        case 5: {
+            if (treeLoaded) {
+                cout << "Size of the tree: " << tree.count() << endl;  //Print the size of the tree
+            }
+            else {
+                cout << "Tree is empty. Load words first.\n";
+            }
+            break;
+        }
+        case 6: {
+            if (treeLoaded) {
+                //Clear the tree
+                tree.clear();
+                cout << "Tree cleared.\n";
+                treeLoaded = false;  //Reset the flag
+            }
+            else {
+                cout << "Tree is empty. Load words first.\n";
+            }
+            break;
+        }
+        case 9: {
+            cout << "Exiting program.\n";
+            return 0;  //Exit the program
+        }
+        default:
+            cout << "Invalid choice. Please try again.\n";
         }
     }
-
-    // Create a BinaryTree for Pair<int, string>
-    BinaryTree<Pair<int, string>> tree;
-
-    // Create objects for testing
-    Pair<int, string> p1(1, "One");
-    Pair<int, string> p2(2, "Two");
-    Pair<int, string> p3(3, "Three");
-    Pair<int, string> p4(4, "Four");
-
-    // Add pairs to the binary tree
-    tree.add(p1);
-    tree.add(p2);
-    tree.add(p3);
-
-    // Test traverseInOrder with stack-based traversal
-    cout << "In-order traversal (stack-based): " << endl;
-    tree.traverseInOrder([](BSTNode<Pair<int, string>>* node) {
-        // Print each node's key-value pair during traversal
-        cout << node->getItem().getFirst() << " : " << node->getItem().getSecond() << endl;
-        });
-
-    // Print in-order traversal
-    cout << "In-order Traversal:" << endl;
-    tree.printInOrder();
-    cout << endl;
-
-    // Print pre-order traversal
-    cout << "Pre-order Traversal:" << endl;
-    tree.printPreOrder();
-    cout << endl;
-
-    // Print post-order traversal
-    cout << "Post-order Traversal:" << endl;
-    tree.printPostOrder();
-    cout << endl;
-
-    // Check the size of the tree
-    cout << "Size of the tree: " << tree.count() << endl;
-
-    // Retrieve a specific pair using its key
-    try {
-        // Call get() which will return Pair<char, std::vector<T>> from the tree
-        Pair<char, std::vector<Pair<int, string>>>& found = tree.get(p2);
-
-        // Now, print the Pair<char, std::vector<T>>
-        cout << "Retrieved Pair: " << found.getFirst() << endl;
-        cout << "Vector size: " << found.getSecond().size() << endl;
-        for (const auto& item : found.getSecond()) {
-            cout << "Item in vector: " << item.getFirst() << " -> " << item.getSecond() << endl;
-        }
-    }
-    catch (logic_error& e) {
-        cout << e.what() << endl;
-    }
-
-    // Remove 2 from the tree
-    tree.remove(p2);
-    cout << "In-order Traversal after removal:" << endl;
-    tree.printInOrder();
-    cout << endl;
-
-    // Add element p4
-    tree.add(p4);
-
-    // Print in-order traversal after adding a new element
-    cout << "In-order Traversal after adding (4, Four):" << endl;
-    tree.printInOrder();
-    cout << endl;
-
-    // Clear the tree
-    cout << "Clearing the tree..." << endl;
-    tree.clear();
-
-    // Check the size after clearing
-    cout << "Size of the tree after clearing: " << tree.count() << endl;
-
-    // Try printing after clearing
-    cout << "In-order Traversal after clearing:" << endl;
-    tree.printInOrder();
 
     return 0;
 }

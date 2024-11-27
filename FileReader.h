@@ -1,14 +1,18 @@
 #pragma once
-#include <string>
-#include <vector>
-#include <fstream>
-#include <sstream>
 #include <iostream>
+#include <fstream>
+#include <vector>
+#include <sstream>
+#include "BinaryTree.h"
+#include "Pair.h"
 
 using namespace std;
 
 class FileReader {
 public:
-    //Method to read words from the file and return them as a vector of strings
-    vector<string> readWordsFromFile(const string& filename);
+    // Method to read words from a file
+    static vector<string> readWordsFromFile(const string& filename);
+
+    // Method to load words into the binary tree with the first letter as the key
+    static void loadWordsToTree(const string& filename, BinaryTree<Pair<string, char>>& tree);
 };
