@@ -1,10 +1,32 @@
 #include <iostream>
 #include "BinaryTree.h"
 #include "Pair.h"
+#include "FileReader.h"
 
 using namespace std;
 
 int main() {
+
+    //Create a FileReader instance
+    FileReader fileReader;
+
+    //Read words from the file
+    vector<string> words = fileReader.readWordsFromFile("RandomWords.txt");
+
+    //Check if the words vector is not empty and print the words
+    if (words.empty()) 
+    {
+        cout << "No words were read from the file." << endl;
+    }
+    else 
+    {
+        cout << "Words read from the file:" << endl;
+        for (const string& word : words) 
+        {
+            cout << word << endl;  //Print each word
+        }
+    }
+
     BinaryTree<Pair<int, string>> tree;
 
     //objects for testing
