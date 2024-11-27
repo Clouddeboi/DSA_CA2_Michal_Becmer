@@ -1,91 +1,91 @@
 #pragma once
-#include <iostream>
-#include "Pair.h"
+#include "Pair.h"  //Include the Pair class
+#include <vector>
 
-template <class T>
+template <typename T>
 class BSTNode {
-private:
-    T item;//Now stores Pair<K, V>
-    BSTNode<T>* left;
-    BSTNode<T>* right;
-
 public:
-    BSTNode();//Default constructor
-    BSTNode(const T& item);//Constructor
+    Pair<char, std::vector<T>> data;  //Data member of type Pair (char, vector<T>)
+    BSTNode* left;  //Left child of the node
+    BSTNode* right;  //Right child of the node
 
-    void setItem(const T& item);// Set item
-    T& getItem();//Get item
-    void setLeft(BSTNode<T>* left);//Set left child
-    void setRight(BSTNode<T>* right);//Set right child
-    BSTNode<T>* getLeft();//Get left child
-    BSTNode<T>* getRight();//Get right child
-
-    void add(const T& item);//Add item recursively
-    int count();//Count nodes in the subtree
+    BSTNode(char firstLetter);  //Constructor to initialize the node with a key
+    void add(const T& item, char firstLetter);  //Method to add an item to the tree
+    void setItem(const Pair<char, std::vector<T>>& item);  //Setter for data
+    Pair<char, std::vector<T>>& getItem();  //Getter for data
+    BSTNode* getLeft();  //Getter for the left child
+    BSTNode* getRight();  //Getter for the right child
+    void setLeft(BSTNode* leftChild);  //Setter for the left child
+    void setRight(BSTNode* rightChild);  //Setter for the right child
+    int count() const;  // Count the number of nodes in this subtree
 };
 
-template <class T>
-BSTNode<T>::BSTNode() : left(nullptr), right(nullptr) {}
-
-template <class T>
-BSTNode<T>::BSTNode(const T& item) : item(item), left(nullptr), right(nullptr) {}
-
-template <class T>
-void BSTNode<T>::setItem(const T& item) {
-    this->item = item;
+// Implementation of count() in BSTNode
+template <typename T>
+int BSTNode<T>::count() const {
+    int leftCount = (left == nullptr) ? 0 : left->count();  // Recursively count left subtree
+    int rightCount = (right == nullptr) ? 0 : right->count();  // Recursively count right subtree
+    return 1 + leftCount + rightCount;  // Count this node and add the counts of left and right
 }
 
-template <class T>
-T& BSTNode<T>::getItem() {
-    return item;
+//Constructor to initialize the node with a first letter
+template <typename T>
+BSTNode<T>::BSTNode(char firstLetter) : data(firstLetter, std::vector<T>()) {
+    left = nullptr;  //Left child is initially nullptr
+    right = nullptr;  //Right child is initially nullptr
 }
 
-template <class T>
-void BSTNode<T>::setLeft(BSTNode<T>* left) {
-    this->left = left;
-}
-
-template <class T>
-void BSTNode<T>::setRight(BSTNode<T>* right) {
-    this->right = right;
-}
-
-template <class T>
-BSTNode<T>* BSTNode<T>::getLeft() {
-    return left;
-}
-
-template <class T>
-BSTNode<T>* BSTNode<T>::getRight() {
-    return right;
-}
-
-//Add item to the tree recursively, comparing based on the key of Pair
-template <class T>
-void BSTNode<T>::add(const T& item) {
-    if (item < this->item) {//Compare based on the key
+template <typename T>
+void BSTNode<T>::add(const T& item, char firstLetter) {
+    if (data.getFirst() == firstLetter) {  // Use the getter to access 'first'
+        data.getSecond().push_back(item);  // Add the item to the vector if the first letter matches
+    }
+    else if (firstLetter < data.getFirst()) {  // Use the getter to access 'first'
         if (left == nullptr) {
-            left = new BSTNode<T>(item);//Add to the left if null
+            left = new BSTNode<T>(firstLetter);  // Create a new left node if needed
         }
-        else {
-            left->add(item);//else recurse the method
-        }
+        left->add(item, firstLetter);  // Recur on the left subtree
     }
     else {
         if (right == nullptr) {
-            right = new BSTNode<T>(item);//Add to the right if null
+            right = new BSTNode<T>(firstLetter);  // Create a new right node if needed
         }
-        else {
-            right->add(item);//else recurse the method
-        }
+        right->add(item, firstLetter);  // Recur on the right subtree
     }
 }
 
-//Count the number of nodes in the subtree
-template <class T>
-int BSTNode<T>::count() {
-    int count = 1;
-    if (left != nullptr) count += left->count();
-    if (right != nullptr) count += right->count();
-    return count;
+//Setter for the data of the node
+template <typename T>
+void BSTNode<T>::setItem(const Pair<char, std::vector<T>>& item) {
+    data = item;  //Set the node's data to the given item
+}
+
+//Getter for the data of the node
+template <typename T>
+Pair<char, std::vector<T>>& BSTNode<T>::getItem() {
+    return data;  //Return the node's data
+}
+
+//Getter for the left child of the node
+template <typename T>
+BSTNode<T>* BSTNode<T>::getLeft() {
+    return left;  //Return the left child
+}
+
+//Getter for the right child of the node
+template <typename T>
+BSTNode<T>* BSTNode<T>::getRight() {
+    return right;  //Return the right child
+}
+
+//Setter for the left child of the node
+template <typename T>
+void BSTNode<T>::setLeft(BSTNode* leftChild) {
+    left = leftChild;  //Set the left child
+}
+
+//Setter for the right child of the node
+template <typename T>
+void BSTNode<T>::setRight(BSTNode* rightChild) {
+    right = rightChild;  //Set the right child
 }

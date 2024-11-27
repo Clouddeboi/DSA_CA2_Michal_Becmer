@@ -7,98 +7,100 @@ using namespace std;
 
 int main() {
 
-    //Create a FileReader instance
+    // Create a FileReader instance
     FileReader fileReader;
 
-    //Read words from the file
+    // Read words from the file
     vector<string> words = fileReader.readWordsFromFile("RandomWords.txt");
 
-    //Check if the words vector is not empty and print the words
-    if (words.empty()) 
-    {
+    // Check if the words vector is not empty and print the words
+    if (words.empty()) {
         cout << "No words were read from the file." << endl;
     }
-    else 
-    {
+    else {
         cout << "Words read from the file:" << endl;
-        for (const string& word : words) 
-        {
-            cout << word << endl;  //Print each word
+        for (const string& word : words) {
+            cout << word << endl;  // Print each word
         }
     }
 
+    // Create a BinaryTree for Pair<int, string>
     BinaryTree<Pair<int, string>> tree;
 
-    //objects for testing
+    // Create objects for testing
     Pair<int, string> p1(1, "One");
     Pair<int, string> p2(2, "Two");
     Pair<int, string> p3(3, "Three");
     Pair<int, string> p4(4, "Four");
 
-    //Add pairs to the binary tree
+    // Add pairs to the binary tree
     tree.add(p1);
     tree.add(p2);
     tree.add(p3);
 
-    //Test traverseInOrder with stack-based traversal
+    // Test traverseInOrder with stack-based traversal
     cout << "In-order traversal (stack-based): " << endl;
-    tree.traverseInOrder([](BSTNode<Pair<int, string>>* node) 
-        {
-        //Print each node's key-value pair during traversal
+    tree.traverseInOrder([](BSTNode<Pair<int, string>>* node) {
+        // Print each node's key-value pair during traversal
         cout << node->getItem().getFirst() << " : " << node->getItem().getSecond() << endl;
-        }
-    );
+        });
 
-    //Print in-order traversal
+    // Print in-order traversal
     cout << "In-order Traversal:" << endl;
     tree.printInOrder();
     cout << endl;
 
-    //Print pre-order traversal
+    // Print pre-order traversal
     cout << "Pre-order Traversal:" << endl;
     tree.printPreOrder();
     cout << endl;
 
-    //Print post-order traversal
+    // Print post-order traversal
     cout << "Post-order Traversal:" << endl;
     tree.printPostOrder();
     cout << endl;
 
-    //Check the size of the tree
+    // Check the size of the tree
     cout << "Size of the tree: " << tree.count() << endl;
 
-    //Retrieve a specific pair using its key
+    // Retrieve a specific pair using its key
     try {
-        Pair<int, string>& found = tree.get(p2);  //Get Pair with key 2
-        cout << "Retrieved Pair: " << found << endl;
+        // Call get() which will return Pair<char, std::vector<T>> from the tree
+        Pair<char, std::vector<Pair<int, string>>>& found = tree.get(p2);
+
+        // Now, print the Pair<char, std::vector<T>>
+        cout << "Retrieved Pair: " << found.getFirst() << endl;
+        cout << "Vector size: " << found.getSecond().size() << endl;
+        for (const auto& item : found.getSecond()) {
+            cout << "Item in vector: " << item.getFirst() << " -> " << item.getSecond() << endl;
+        }
     }
     catch (logic_error& e) {
         cout << e.what() << endl;
     }
 
-    //Remove 2 from the tree
+    // Remove 2 from the tree
     tree.remove(p2);
     cout << "In-order Traversal after removal:" << endl;
     tree.printInOrder();
     cout << endl;
 
-
-    //Adding element
+    // Add element p4
     tree.add(p4);
 
-    //Print in-order traversal after adding a new element
+    // Print in-order traversal after adding a new element
     cout << "In-order Traversal after adding (4, Four):" << endl;
     tree.printInOrder();
     cout << endl;
 
-    //Clear the tree
+    // Clear the tree
     cout << "Clearing the tree..." << endl;
     tree.clear();
 
-    //Check the size after clearing
+    // Check the size after clearing
     cout << "Size of the tree after clearing: " << tree.count() << endl;
 
-    //Try printing after clearing
+    // Try printing after clearing
     cout << "In-order Traversal after clearing:" << endl;
     tree.printInOrder();
 

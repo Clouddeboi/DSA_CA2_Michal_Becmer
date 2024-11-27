@@ -3,7 +3,7 @@
 #include "Pair.h"
 #include <vector>
 #include <iostream>
-#include <stack> 
+#include <stack>
 #include <functional>
 
 using namespace std;
@@ -20,8 +20,7 @@ public:
     void add(const T& item);//Add method works with pair
     bool remove(const T& item);//Remove method works with pair
     void clear();//clears entire tree
-    int count();//counts the number of nodes in the tree
-    T& get(const T& item);//Gets item from tree
+    Pair<char, std::vector<T>>& get(const T& item);
 
     void printInOrder();//prints item in order
     void printInOrder(BSTNode<T>* node);
@@ -30,12 +29,15 @@ public:
     void printPostOrder();//prints items in post order
     void printPostOrder(BSTNode<T>* node);
     void traverseInOrder(std::function<void(BSTNode<T>*)> callback);
+
+    int count() const;
+
     T* toArray();
     ~BinaryTree();//Destructor
 };
 
 template <class T>
-BinaryTree<T>::BinaryTree() : root(nullptr) {}
+BinaryTree<T>::BinaryTree() : root(nullptr) {} //Constructor
 
 template <class T>
 BinaryTree<T>::BinaryTree(const BinaryTree<T>& other) {
@@ -57,25 +59,16 @@ BinaryTree<T>& BinaryTree<T>::operator=(const BinaryTree<T>& other) {
 
 template <class T>
 void BinaryTree<T>::add(const T& item) {
-    if (root == nullptr) {//if the tree is empty
-        root = new BSTNode<T>(item);//create a new root
+    if (root == nullptr) {
+        root = new BSTNode<T>(item.getFirst());  // Create root if tree is empty
     }
-    else {
-        root->add(item); //we make it recursive so it keeps adding items to the correct node
-    }
-}
-
-template <class T>
-int BinaryTree<T>::count() {
-    if (root == nullptr)
-        return 0; //if the tree is empty, return 0
-    return root->count();//if it's not empty, return the node count
+    root->add(item, item.getFirst());  // Call the add method of the root node
 }
 
 template <class T>
 bool BinaryTree<T>::remove(const T& item) {
-    BSTNode<T>* toBeRemoved = root;//Start with root
-    BSTNode<T>* parent = nullptr;//Parent of the node to be removed
+    BSTNode<T>* toBeRemoved = root; //Start with root
+    BSTNode<T>* parent = nullptr; //Parent of the node to be removed
     bool found = false;
 
     //Search for the node to remove
@@ -95,7 +88,7 @@ bool BinaryTree<T>::remove(const T& item) {
     }
 
     if (!found)
-        return false;//If Item not found, return false
+        return false; //If Item not found, return false
 
     //If the node has 1 or 0 children, we replace it with its child
     if (toBeRemoved->getLeft() == nullptr || toBeRemoved->getRight() == nullptr) {
@@ -137,7 +130,7 @@ bool BinaryTree<T>::remove(const T& item) {
 }
 
 template <class T>
-T& BinaryTree<T>::get(const T& item) {
+Pair<char, std::vector<T>>& BinaryTree<T>::get(const T& item) {
     bool found = false;
     BSTNode<T>* current = root;
 
@@ -145,14 +138,14 @@ T& BinaryTree<T>::get(const T& item) {
         if (current == nullptr)
             break;
         if (current->getItem() == item)
-            return current->getItem();
+            return current->getItem();  // Return Pair<char, std::vector<T>>&
         else if (current->getItem() > item)
             current = current->getLeft();
         else
             current = current->getRight();
     }
 
-    throw logic_error("Item not found");//if not found we throw a logic error
+    throw logic_error("Item not found");
 }
 
 template <class T>
@@ -175,9 +168,17 @@ T* BinaryTree<T>::toArray() {
 
 template <class T>
 void BinaryTree<T>::clear() {
-        // Delete the current root node
-        delete root;
-        root = nullptr;   
+    // Delete the current root node
+    delete root;
+    root = nullptr;
+}
+
+template <class T>
+int BinaryTree<T>::count() const {
+    if (root == nullptr) {
+        return 0;  // If the tree is empty, return 0
+    }
+    return root->count();  // Call the count method of the root node
 }
 
 template <class T>
@@ -198,7 +199,7 @@ template <class T>
 void BinaryTree<T>::printInOrder(BSTNode<T>* node) {
     if (node != nullptr) {
         printInOrder(node->getLeft());
-        cout << node->getItem() << " ";//Print the item using overloaded <<
+        cout << node->getItem() << " "; //Print the item using overloaded <<
         printInOrder(node->getRight());
     }
 }
@@ -212,7 +213,7 @@ void BinaryTree<T>::printPreOrder() {
 template <class T>
 void BinaryTree<T>::printPreOrder(BSTNode<T>* node) {
     if (node != nullptr) {
-        cout << node->getItem() << " ";//Print the item using overloaded <<
+        cout << node->getItem() << " "; //Print the item using overloaded <<
         printPreOrder(node->getLeft());
         printPreOrder(node->getRight());
     }
@@ -229,15 +230,15 @@ void BinaryTree<T>::printPostOrder(BSTNode<T>* node) {
     if (node != nullptr) {
         printPostOrder(node->getLeft());
         printPostOrder(node->getRight());
-        cout << node->getItem() << " ";//Print the item using overloaded <<
+        cout << node->getItem() << " "; //Print the item using overloaded <<
     }
 }
 
 template <class T>
 void BinaryTree<T>::traverseInOrder(std::function<void(BSTNode<T>*)> visit) {
-    if (root == nullptr) return;//If the tree is empty, do nothing
+    if (root == nullptr) return; //If the tree is empty, do nothing
 
-    std::stack<BSTNode<T>*> nodeStack;//Stack to hold nodes
+    std::stack<BSTNode<T>*> nodeStack; //Stack to hold nodes
     BSTNode<T>* current = root;
 
     while (!nodeStack.empty() || current != nullptr) {
@@ -251,10 +252,9 @@ void BinaryTree<T>::traverseInOrder(std::function<void(BSTNode<T>*)> visit) {
         current = nodeStack.top();
         nodeStack.pop();
 
-        visit(current);//Call the visit function on the current node
+        visit(current); //Call the visit function on the current node
 
         //Move to the right subtree
         current = current->getRight();
     }
 }
-
