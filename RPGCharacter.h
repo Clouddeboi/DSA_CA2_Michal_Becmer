@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
-
+//https://mockaroo.com/
 using namespace std;
 
 class RPGCharacter {
