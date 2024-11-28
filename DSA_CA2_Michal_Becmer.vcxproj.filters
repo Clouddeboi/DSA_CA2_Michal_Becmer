@@ -45,4 +45,9 @@
   <ItemGroup>
     <Text Include="RandomWords.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Downloads\Random_Character_Data.csv">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
