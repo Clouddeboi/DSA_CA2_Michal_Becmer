@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RPGCharacter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryTree.h" />
@@ -142,7 +143,7 @@
     <Text Include="RandomWords.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Downloads\Random_Character_Data.csv" />
+    <None Include="Random_Character_Data.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

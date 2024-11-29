@@ -1,16 +1,16 @@
 #pragma once
-#include "BinaryTree.h"  //Include BinaryTree.h for BinaryTree class
-#include "Pair.h"  //Include Pair.h for Pair class
+#include "BinaryTree.h"
+#include "Pair.h"
 
 template <class K, class V>
 class TreeMap {
 private:
-    BinaryTree<Pair<K, V>> tree;  //Binary tree to store pairs
+    BinaryTree<Pair<K, V>> tree;//Binary tree to store pairs
 
 public:
     TreeMap();//Constructor
     void put(const K& key, const V& value);//Insert a key-value pair
-    V get(const K& key);//Get value for a key
+    V& get(const K& key);//Get value for a key (now returns a reference)
     bool containsKey(const K& key);//Check if key exists
     bool remove(const K& key);//Remove a key-value pair
     int size();//Get the number of key-value pairs
@@ -18,12 +18,16 @@ public:
     void printInOrder();//Print all key-value pairs in order
     void printPreOrder();//Print all key-value pairs in pre-order
     void printPostOrder();//Print all key-value pairs in post-order
-    BinaryTree<K> keySet();
+    BinaryTree<K> keySet();//Get a set of all keys in the TreeMap
+    void traverseInOrder(std::function<void(BSTNode<Pair<K, V>>*)> visit) const;
+
+    //Added operator[] for direct access to elements
+    V& operator[](const K& key);//Access or insert key-value pair
 };
 
 template <class K, class V>
 TreeMap<K, V>::TreeMap() {
-    //Constructor, BinaryTree is automatically initialized
+  //Constructor, BinaryTree is automatically initialized
 }
 
 template <class K, class V>
@@ -33,24 +37,23 @@ void TreeMap<K, V>::put(const K& key, const V& value) {
 }
 
 template <class K, class V>
-V TreeMap<K, V>::get(const K& key) {
+V& TreeMap<K, V>::get(const K& key) {
     Pair<K, V> pair(key, V());//Create a pair with the key and a default value
     Pair<K, V>& foundPair = tree.get(pair);//Get the pair from the tree
-    return foundPair.getSecond();//Return the value part of the pair
+    return foundPair.getSecond();//Return the reference to the value part of the pair
 }
 
 template <class K, class V>
 bool TreeMap<K, V>::containsKey(const K& key) {
-    Pair<K, V> pair(key, V()); // Create a pair with the key
+    Pair<K, V> pair(key, V());//Create a pair with the key
     try {
-        tree.get(pair); // Try to get the pair from the tree
-        return true;
+        tree.get(pair);//Try to get the pair from the tree
+        return true;//If key exists, return true
     }
-    catch (const std::logic_error&) { // Catch logic_error thrown by get()
-        return false; // If key not found, return false
+    catch (const std::logic_error&) {//Catch logic_error thrown by get() if key is not found
+        return false;//If key not found, return false
     }
 }
-
 
 template <class K, class V>
 bool TreeMap<K, V>::remove(const K& key) {
@@ -70,27 +73,27 @@ void TreeMap<K, V>::clear() {
 
 template <class K, class V>
 void TreeMap<K, V>::printInOrder() {
-    tree.printInOrder();//Print in order
+    tree.printInOrder();//Print in order (in-order traversal)
 }
 
 template <class K, class V>
 void TreeMap<K, V>::printPreOrder() {
-    tree.printPreOrder();//Print pre-order
+    tree.printPreOrder();//Print pre-order (pre-order traversal)
 }
 
 template <class K, class V>
 void TreeMap<K, V>::printPostOrder() {
-    tree.printPostOrder();//Print post-order
+    tree.printPostOrder();//Print post-order (post-order traversal)
 }
 
 template <class K, class V>
 BinaryTree<K> TreeMap<K, V>::keySet() {
     BinaryTree<K> keysTree;//Create a new BinaryTree to store the keys
 
-    //function to traverse the tree recursively
+    //Function to traverse the tree recursively
     std::function<void(BSTNode<Pair<K, V>>*)> traverse = [&](BSTNode<Pair<K, V>>* node)
         {
-            if (node != nullptr) {
+            if (node != nullptr) {//If the node is not null
                 traverse(node->getLeft());//Visit left subtree
                 keysTree.add(node->getItem().getFirst());//Add the key to keysTree
                 traverse(node->getRight());//Visit right subtree
@@ -101,3 +104,19 @@ BinaryTree<K> TreeMap<K, V>::keySet() {
     return keysTree;//Return the BinaryTree containing the keys
 }
 
+template <class K, class V>
+void TreeMap<K, V>::traverseInOrder(std::function<void(BSTNode<Pair<K, V>>*)> visit) const {
+    tree.traverseInOrder(visit);//Call traverseInOrder on the BinaryTree inside TreeMap
+}
+
+template <class K, class V>
+V& TreeMap<K, V>::operator[](const K& key) {
+    //Try to get the value for the key, if it does not exist, insert with default value
+    try {
+        return get(key);//Try to get the value using the get() method
+    }
+    catch (const std::logic_error&) {
+        put(key, V());//Insert a new pair with default value if not found
+        return get(key);//Return the newly inserted default value
+    }
+}

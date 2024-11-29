@@ -21,6 +21,9 @@
     <ClCompile Include="FileReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RPGCharacter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryTree.h">
@@ -43,11 +46,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="RandomWords.txt" />
+    <None Include="Random_Character_Data.csv" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Downloads\Random_Character_Data.csv">
-      <Filter>Source Files</Filter>
-    </None>
+    <Text Include="RandomWords.txt" />
   </ItemGroup>
 </Project>

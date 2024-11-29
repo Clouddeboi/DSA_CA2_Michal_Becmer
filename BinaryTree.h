@@ -61,7 +61,7 @@ void BinaryTree<T>::add(const T& item) {
         root = new BSTNode<T>(item);//create a new root
     }
     else {
-        root->add(item); //we make it recursive so it keeps adding items to the correct node
+        root->add(item);//we make it recursive so it keeps adding items to the correct node
     }
 }
 
@@ -175,7 +175,7 @@ T* BinaryTree<T>::toArray() {
 
 template <class T>
 void BinaryTree<T>::clear() {
-    // Delete the current root node
+    //Delete the current root node
     delete root;
     root = nullptr;
 }
@@ -235,25 +235,25 @@ void BinaryTree<T>::printPostOrder(BSTNode<T>* node) {
 
 template <class T>
 void BinaryTree<T>::traverseInOrder(std::function<void(BSTNode<T>*)> visit) const {
-    if (root == nullptr) return; // If the tree is empty, do nothing
+    if (root == nullptr) return;//If the tree is empty, do nothing
 
-    std::stack<BSTNode<T>*> nodeStack; // Stack to hold nodes
+    std::stack<BSTNode<T>*> nodeStack;//Stack to hold nodes
     BSTNode<T>* current = root;
 
     while (!nodeStack.empty() || current != nullptr) {
-        // Reach the leftmost node of the current node
+        //Reach the leftmost node of the current node
         while (current != nullptr) {
             nodeStack.push(current);
             current = current->getLeft();
         }
 
-        // Current must be nullptr at this point; process the top node
+        //Current must be nullptr at this point; process the top node
         current = nodeStack.top();
         nodeStack.pop();
 
-        visit(current); // Call the visit function on the current node
+        visit(current); //Call the visit function on the current node
 
-        // Move to the right subtree
+        //Move to the right subtree
         current = current->getRight();
     }
 }

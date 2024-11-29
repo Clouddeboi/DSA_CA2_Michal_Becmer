@@ -1,38 +1,65 @@
 #pragma once
 #include <string>
+#include <vector>
+#include <fstream>
 #include <iostream>
-//https://mockaroo.com/
+#include <cstdio> 
+#include "BinaryTree.h"
+#include "Pair.h"
+#include "TreeMap.h"
+
 using namespace std;
 
 class RPGCharacter {
+private:
+    int id;//Character ID
+    string name;//Character name
+    string element;//Character's element
+    string characterClass;//Character's class
+    int level;//Character's level
+    bool isLegendary;//Legendary check
+
 public:
-    int id;          //Character ID
-    string name;     //Character name
-    string element;  //Character's element (this will be something like water, fire, etc.)
-    int hp;          //Character's Health stat
-    int attack;      //Character's attack stat
-    int defense;     //Character's defensive stat
-
     //Default constructor
-    RPGCharacter()
-        : id(0), name("Unknown"), element("None"), hp(0), attack(0), defense(0) {}
+    //Initializes the RPGCharacter with default values
+    RPGCharacter();
 
-    //Constructor to initialize an RPGCharacter object
-    RPGCharacter(int id, string name, string element, int hp, int attack, int defense)
-        : id(id), name(name), element(element), hp(hp), attack(attack), defense(defense) {}
+    //Parameterized constructor
+    //Initializes the RPGCharacter with provided values
+    RPGCharacter(int id, string name, string element, string characterClass, int level, bool isLegendary);
 
-    bool operator<(const RPGCharacter& other) const {
-        return this->name < other.name;  //Compares the characters by name
-    }
+    //Comparison operator to enable sorting by name
+    //Returns true if this character's name is less than the other character's name
+    bool operator<(const RPGCharacter& other) const;
 
-    //Equality operator for RPGCharacter, this is needed because of how BSTNode is coded
-    bool operator==(const RPGCharacter& other) const {
-        return this->id == other.id;  //Allows us to use == to compare character IDs
-    }
+    //Equality operator for RPGCharacter
+    //Returns true if this character's ID is equal to the other character's ID
+    bool operator==(const RPGCharacter& other) const;
 
-    //Display method to print character's info
-    void display() const {
-        cout << "ID: " << id << ", Name: " << name << ", Element: " << element
-            << ", HP: " << hp << ", Attack: " << attack << ", Defense: " << defense << endl;
-    }
+    //Function to load RPG characters from a CSV file into a TreeMap
+    //Uses a key (e.g., element or character_class) to organize the characters
+    void loadCharactersToTree(const string& filename, TreeMap<string, vector<RPGCharacter>>& tree, const string& keyField);
+
+    //Display method to print character's information
+    //Displays the character's ID, name, element, class, level, and legendary status
+    void display() const;
+
+    //Getters and Setters for member variables
+    int getId() const;//Returns the character's ID
+    void setId(int id);//Sets the character's ID
+
+    string getName() const;//Returns the character's name
+    void setName(const string& name);//Sets the character's name
+
+    string getElement() const;//Returns the character's element
+    void setElement(const string& element);//Sets the character's element
+
+    string getCharacterClass() const;//Returns the character's class
+    void setCharacterClass(const string& characterClass);//Sets the character's class
+
+    int getLevel() const;//Returns the character's level
+    void setLevel(int level);//Sets the character's level
+
+    bool getIsLegendary() const;//Returns whether the character is legendary
+    void setIsLegendary(bool isLegendary);//Sets the character's legendary status
 };
