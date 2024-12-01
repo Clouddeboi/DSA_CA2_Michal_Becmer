@@ -25,7 +25,7 @@ void printMenu() {
     cout << "9. In-order Traversal (TreeMap)\n";
     cout << "10. Print all RPG characters\n";
     cout << "11. Clear RPG characters from treemap\n";
-    cout << "12. Print characters in order\n";
+    cout << "12. Find Characters by index\n";
     cout << "99. Exit\n";
 }
 
@@ -148,7 +148,8 @@ int main() {
         }
         case 10: {
             //Print all RPG characters
-            if (charactersLoaded) {
+            if (charactersLoaded) 
+            {
                 cout << "Printing all RPG characters:\n";
                 treeMap.traverseInOrder([](BSTNode<Pair<string, vector<RPGCharacter>>>* node) {
                     //For each entry, print the key (element/character_class) and all RPG characters associated with that key
@@ -176,6 +177,23 @@ int main() {
             treeMap.clear();
             cout << "RPG Character Tree cleared.\n";
             charactersLoaded = false;//Reset the flag
+            break;
+        }
+        case 12: {
+            if (charactersLoaded)
+            {
+                string index;//The index (has to be the full word, for example "Druid")
+
+                cout << "Enter the full word of the element or character class to search for characters: ";
+                cin >> index;//User inputs the index
+
+                //Call the method to find characters by the specified index
+                fileReader.findCharactersByIndex(index, treeMap);
+            }
+            else
+            {
+                cout << "TreeMap is empty. Load characters first.\n";
+            }
             break;
         }
         case 99:

@@ -23,7 +23,7 @@ public:
     //Uses a key (e.g., element or character_class) for indexing RPGCharacter objects
     void loadCharactersToTree(const string& filename, TreeMap<string, vector<RPGCharacter>>& treeMap, const string& keyField);
 
-    //Method to find RPG characters by the first letter of the specified field (e.g., element or character class)
-    //Searches within the TreeMap based on the index letter
-    void findCharactersByIndex(char index, TreeMap<string, vector<RPGCharacter>>& tree);
+    //Method to find RPG characters by the specified field (e.g., element or character class)
+    //Searches within the TreeMap based on the index 
+    void findCharactersByIndex(const string& key, TreeMap<string, vector<RPGCharacter>>& tree);
 };

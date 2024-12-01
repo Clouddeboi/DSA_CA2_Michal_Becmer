@@ -100,25 +100,23 @@ void FileReader::loadCharactersToTree(const string& filename, TreeMap<string, ve
     file.close();
 }
 
-////Method to find RPG characters by the first letter of the specified field (e.g., element or character class)
-//void FileReader::findCharactersByIndex(char index, TreeMap<string, vector<RPGCharacter>>& tree) {
-//    index = toupper(index);//Convert index to uppercase to match the keys in the tree
-//
-//    //Function to check and print matching characters
-//    auto callback = [&](BSTNode<Pair<string, vector<RPGCharacter>>>* node) 
-//        {
-//            if (node != nullptr) 
-//            {
-//                //Search for characters within the vector whose field starts with the specified index
-//                for (const auto& character : node->getItem().getSecond()) 
-//                {
-//                    if (toupper(character.getElement()[0]) == index || toupper(character.getCharacterClass()[0]) == index) 
-//                    {
-//                        character.display();//Display character's information
-//                    }
-//                }
-//            }
-//        };
-//
-//    tree.traverseInOrder(callback);//Traverse the TreeMap in order
-//}
+//Method to find RPG characters by the full word of the specified field (e.g., element or character class)
+void FileReader::findCharactersByIndex(const string& index, TreeMap<string, vector<RPGCharacter>>& tree) {
+    //Function to check and print matching characters
+    auto callback = [&](BSTNode<Pair<string, vector<RPGCharacter>>>* node)
+        {
+            if (node != nullptr)
+            {
+                //Search for characters within the vector whose field exactly matches the word
+                for (const auto& character : node->getItem().getSecond())
+                {
+                    if (character.getElement() == index || character.getCharacterClass() == index)
+                    {
+                        character.display();//Display character's information
+                    }
+                }
+            }
+        };
+
+    tree.traverseInOrder(callback);//Traverse the TreeMap in order
+}
