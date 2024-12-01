@@ -19,7 +19,7 @@ public:
     void printPreOrder();//Print all key-value pairs in pre-order
     void printPostOrder();//Print all key-value pairs in post-order
     BinaryTree<K> keySet();//Get a set of all keys in the TreeMap
-    void traverseInOrder(std::function<void(BSTNode<Pair<K, V>>*)> visit) const;
+    //void traverseInOrder(std::function<void(BSTNode<Pair<K, V>>*)> visit) const;
 
     //Added operator[] for direct access to elements
     V& operator[](const K& key);//Access or insert key-value pair
@@ -102,11 +102,6 @@ BinaryTree<K> TreeMap<K, V>::keySet() {
 
     traverse(tree.root);//Start traversal from the root of the binary tree
     return keysTree;//Return the BinaryTree containing the keys
-}
-
-template <class K, class V>
-void TreeMap<K, V>::traverseInOrder(std::function<void(BSTNode<Pair<K, V>>*)> visit) const {
-    tree.traverseInOrder(visit);//Call traverseInOrder on the BinaryTree inside TreeMap
 }
 
 template <class K, class V>

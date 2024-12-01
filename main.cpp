@@ -22,8 +22,8 @@ void printMenu() {
     cout << "\nStage 4\n";
     cout << "-----------------------------------------------\n";
     cout << "8. Load RPG characters into TreeMap\n";
-    cout << "9. In-order Traversal (TreeMap)\n";
-    cout << "10. Print all RPG characters\n";
+    cout << "9. In-order Traversal Count (TreeMap)\n";
+    cout << "10. Fully Print all RPG characters\n";
     cout << "11. Clear RPG characters from treemap\n";
     cout << "12. Find Characters by index\n";
     cout << "99. Exit\n";
@@ -116,7 +116,8 @@ int main() {
                 cout << "Enter a letter (A-Z) to find words starting with that letter: ";
                 cin >> index;
                 index = toupper(index);//Ensure the letter is uppercase
-                fileReader.findWordsByIndex(index, tree);//Find and display words starting with the specified letter
+                //fileReader.findWordsByIndex(index, tree);//Find and display words starting with the specified letter
+                //Don't have time to implement using PrintInOrder(), worked in previous commits using a custom method
             }
             else 
             {
@@ -137,15 +138,10 @@ int main() {
             break;
         }
         case 9: {
-            //Traverse the TreeMap in order
+            //Traverse the TreeMap in order (count)
             if (charactersLoaded)
             {
-                //cout << "In-order Traversal of TreeMap:\n";
-                //treeMap.traverseInOrder([](BSTNode<Pair<string, vector<RPGCharacter>>>* node) {
-                //    //For each node in TreeMap, print the key (string) and the size of the vector of RPGCharacters
-                //    cout << "Key: " << node->getItem().getFirst() << ", Size: "
-                //        << node->getItem().getSecond().size() << endl;
-                //    });
+                //Don't have time to implement using PrintInOrder(), worked in previous commits using a custom method
             }
             else
             {
@@ -173,29 +169,10 @@ int main() {
             break;
         }
         case 12: {
+            //Find character by index
             if (charactersLoaded)
             {
-                //string index;//The index (has to be the full word, for example "Druid")
-
-                //cout << "Enter the full word/number of the Character name, element, Character class or level to search for characters: \n";
-                //cin >> index;//User inputs the index
-
-                ////prints headings
-                //printHeadings();
-
-                ////Call the method to find characters by the specified index
-                //fileReader.findCharactersByIndex(index, treeMap);
-            }
-            else
-            {
-                cout << "TreeMap is empty. Load characters first.\n";
-            }
-            break;
-        }
-        case 13: {
-            if (charactersLoaded)
-            {
-                treeMap.printInOrder();
+                //Don't have time to implement using PrintInOrder(), worked in previous commits using a custom method
             }
             else
             {

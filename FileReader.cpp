@@ -27,23 +27,6 @@ void FileReader::loadWordsToTree(const string& filename, BinaryTree<Pair<string,
     file.close();//Close the file after reading
 }
 
-//Method to find words by their first letter in the tree
-void FileReader::findWordsByIndex(char index, BinaryTree<Pair<string, char>>& tree) {
-    index = toupper(index);//Ensure the index is uppercase
-
-    //Callback function to print matching words
-    //Checks if the 'Second' value (character) of the Pair in the current node matches the given index
-    //If there's a match, prints the 'First' value (word) of the Pair
-    auto callback = [&](BSTNode<Pair<string, char>>* node) 
-        {
-            if (node != nullptr && node->getItem().getSecond() == index) 
-            {
-                cout << node->getItem().getFirst() << endl;//Print the word
-            }
-        };
-
-    tree.traverseInOrder(callback);//Traverse the tree in order
-}
 
 //Updated method to load RPG characters into TreeMap
 void FileReader::loadCharactersToTree(const string& filename, TreeMap<string, vector<RPGCharacter>>& treeMap, const string& keyField) {
@@ -112,31 +95,3 @@ void FileReader::loadCharactersToTree(const string& filename, TreeMap<string, ve
     file.close();
 }
 
-//Method to find RPG characters by the full word of the specified field (e.g., element or character class)
-void FileReader::findCharactersByIndex(const string& index, TreeMap<string, vector<RPGCharacter>>& tree) {
-    //Function to check and print matching characters
-    auto callback = [&](BSTNode<Pair<string, vector<RPGCharacter>>>* node)
-        {
-            if (node != nullptr)
-            {
-                //Search for characters within the vector whose field exactly matches the word
-                for (const auto& character : node->getItem().getSecond())
-                {
-                    if (character.getElement() == index || character.getCharacterClass() == index 
-                        || character.getName() == index || to_string(character.getLevel()) == index)
-                    {
-                        character.display();//Display character's information
-                    }
-                    if (index == "TRUE" || index == "FALSE")
-                    {
-                        if(character.getIsLegendary() == (index == "TRUE") || (!character.getIsLegendary() && index == "FALSE"))
-                        {
-                            character.display();
-                        }
-                    }
-                }
-            }
-        };
-
-    tree.traverseInOrder(callback);//Traverse the TreeMap in order
-}
