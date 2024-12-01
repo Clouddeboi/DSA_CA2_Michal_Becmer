@@ -32,6 +32,8 @@ void FileReader::findWordsByIndex(char index, BinaryTree<Pair<string, char>>& tr
     index = toupper(index);//Ensure the index is uppercase
 
     //Callback function to print matching words
+    //Checks if the 'Second' value (character) of the Pair in the current node matches the given index
+    //If there's a match, prints the 'First' value (word) of the Pair
     auto callback = [&](BSTNode<Pair<string, char>>* node) 
         {
             if (node != nullptr && node->getItem().getSecond() == index) 
@@ -62,6 +64,7 @@ void FileReader::loadCharactersToTree(const string& filename, TreeMap<string, ve
         bool isLegendary;
 
         //Read values separated by commas
+        //Store them in variables and parse them if they aren't strings
         if (getline(ss, line, ',')) { id = stoi(line); }
         if (getline(ss, name, ',')) {}
         if (getline(ss, element, ',')) {}
@@ -71,6 +74,7 @@ void FileReader::loadCharactersToTree(const string& filename, TreeMap<string, ve
 
         RPGCharacter character(id, name, element, characterClass, level, isLegendary);
 
+        //Based on the users input, it sets the key to match the keyField
         string key;
         if (keyField == "element") 
         {
@@ -82,54 +86,39 @@ void FileReader::loadCharactersToTree(const string& filename, TreeMap<string, ve
         }
         else 
         {
+            //Error if the key doesn't match
             cout << "Invalid key field" << endl;
             return;
         }
 
         //Using operator[] to insert the character into the TreeMap
-        treeMap[key].push_back(character);//Adds the character to the vector for the key
+        //Adds the character to the vector for the key
+        //If the key doesnt exist, it creates a new vector with that key
+        treeMap[key].push_back(character);
     }
 
     file.close();
 }
 
-//Method to find RPG characters by the first letter of the specified field (e.g., element or character class)
-void FileReader::findCharactersByIndex(char index, TreeMap<string, vector<RPGCharacter>>& tree) {
-    index = toupper(index);//Convert index to uppercase to match the keys in the tree
-
-    //Function to check and print matching characters
-    auto callback = [&](BSTNode<Pair<string, vector<RPGCharacter>>>* node) 
-        {
-            if (node != nullptr) 
-            {
-                //Search for characters within the vector whose field starts with the specified index
-                for (const auto& character : node->getItem().getSecond()) 
-                {
-                    if (toupper(character.getElement()[0]) == index || toupper(character.getCharacterClass()[0]) == index) 
-                    {
-                        character.display();//Display character's information
-                    }
-                }
-            }
-        };
-
-    tree.traverseInOrder(callback);//Traverse the TreeMap in order
-}
-
-//Method to view all RPG characters from the TreeMap
-void FileReader::viewAllCharacters(const TreeMap<string, vector<RPGCharacter>>& tree) {
-    //Function to display all RPG characters in the TreeMap
-    auto callback = [&](BSTNode<Pair<string, vector<RPGCharacter>>>* node) 
-        {
-            if (node != nullptr) 
-            {
-                //Iterate through each vector of characters
-                for (const auto& character : node->getItem().getSecond()) 
-                {
-                    character.display();//Display each character's information
-                }
-            }
-        };
-
-    tree.traverseInOrder(callback);//Traverse the TreeMap in order and display each character
-}
+////Method to find RPG characters by the first letter of the specified field (e.g., element or character class)
+//void FileReader::findCharactersByIndex(char index, TreeMap<string, vector<RPGCharacter>>& tree) {
+//    index = toupper(index);//Convert index to uppercase to match the keys in the tree
+//
+//    //Function to check and print matching characters
+//    auto callback = [&](BSTNode<Pair<string, vector<RPGCharacter>>>* node) 
+//        {
+//            if (node != nullptr) 
+//            {
+//                //Search for characters within the vector whose field starts with the specified index
+//                for (const auto& character : node->getItem().getSecond()) 
+//                {
+//                    if (toupper(character.getElement()[0]) == index || toupper(character.getCharacterClass()[0]) == index) 
+//                    {
+//                        character.display();//Display character's information
+//                    }
+//                }
+//            }
+//        };
+//
+//    tree.traverseInOrder(callback);//Traverse the TreeMap in order
+//}

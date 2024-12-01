@@ -36,10 +36,6 @@ public:
     //Returns true if this character's ID is equal to the other character's ID
     bool operator==(const RPGCharacter& other) const;
 
-    //Function to load RPG characters from a CSV file into a TreeMap
-    //Uses a key (e.g., element or character_class) to organize the characters
-    void loadCharactersToTree(const string& filename, TreeMap<string, vector<RPGCharacter>>& tree, const string& keyField);
-
     //Display method to print character's information
     //Displays the character's ID, name, element, class, level, and legendary status
     void display() const;

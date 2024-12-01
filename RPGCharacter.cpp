@@ -24,56 +24,6 @@ bool RPGCharacter::operator==(const RPGCharacter& other) const {
     return this->id == other.id;//Compares characters by ID
 }
 
-//Method to load RPG characters from a CSV file into a TreeMap
-//Uses a key (e.g., element or character_class) for indexing RPGCharacter objects
-void RPGCharacter::loadCharactersToTree(const string& filename, TreeMap<string, vector<RPGCharacter>>& tree, const string& keyField) {
-    ifstream file(filename);//Open the file to read character data
-    if (!file.is_open()) 
-    {
-        cout << "Error opening file: " << filename << endl;//Display an error message if the file can't be opened 
-        return;//Return if file can't be opened
-    }
-
-    string name, element, characterClass;//Variables to store character info
-    int id, level;//Variables for character stats
-    bool isLegendary;//Flag for legendary status
-
-    while (file >> id >> name >> element >> characterClass >> level >> isLegendary) {//While there are characters in the file
-        //Create an RPGCharacter object for each line
-        RPGCharacter character(id, name, element, characterClass, level, isLegendary);
-
-        string key;  //Variable to hold the key for the TreeMap
-
-        //Check the specified keyField to determine which field to use as the key
-        if (keyField == "element") 
-        {
-            key = element;//Use element as the key
-        }
-        else if (keyField == "character_class") 
-        {
-            key = characterClass;//Use character class as the key
-        }
-        //If the key already exists in the TreeMap
-        if (tree.containsKey(key)) 
-        {
-            //Retrieve the existing vector of RPGCharacters by reference
-            vector<RPGCharacter>& existingCharacters = tree.get(key);
-
-            //Add the new character to the vector
-            existingCharacters.push_back(character);
-        }
-        else 
-        {   //If the key doesn't exist
-            //Create a new vector containing the new character
-            vector<RPGCharacter> newCharacters = { character };
-            //Add the new key-value pair to the TreeMap
-            tree.put(key, newCharacters);
-        }
-    }
-
-    file.close();  //Close the file after reading
-}
-
 //Display method to print character's information
 //Displays the character's ID, name, element, class, level, and legendary status
 void RPGCharacter::display() const {

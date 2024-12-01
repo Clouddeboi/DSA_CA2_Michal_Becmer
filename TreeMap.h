@@ -112,6 +112,8 @@ void TreeMap<K, V>::traverseInOrder(std::function<void(BSTNode<Pair<K, V>>*)> vi
 template <class K, class V>
 V& TreeMap<K, V>::operator[](const K& key) {
     //Try to get the value for the key, if it does not exist, insert with default value
+    //This is so if the user tries to insert a value that doesn't exist, it will make a new key with the input
+    //and print out an empty vector (since there is nothing in that field)
     try {
         return get(key);//Try to get the value using the get() method
     }

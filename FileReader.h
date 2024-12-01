@@ -26,8 +26,4 @@ public:
     //Method to find RPG characters by the first letter of the specified field (e.g., element or character class)
     //Searches within the TreeMap based on the index letter
     void findCharactersByIndex(char index, TreeMap<string, vector<RPGCharacter>>& tree);
-
-    //Method to view all RPG characters from the CSV file
-    //Displays all the characters stored in the TreeMap
-    void viewAllCharacters(const TreeMap<string, vector<RPGCharacter>>& tree);
 };

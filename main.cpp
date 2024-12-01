@@ -21,16 +21,21 @@ void printMenu() {
     cout << "7. Find words by index (first letter)\n";
     cout << "\nStage 4\n";
     cout << "-----------------------------------------------\n";
-    cout << "8. Load RPG characters into TreeMap\n";//New option for TreeMap traversal
-    cout << "9. In-order Traversal (TreeMap)\n";//New option to load RPG characters
-    cout << "10. Print all RPG characters\n";//New option to print all characters
-    cout << "11. Exit\n";
+    cout << "8. Load RPG characters into TreeMap\n";
+    cout << "9. In-order Traversal (TreeMap)\n";
+    cout << "10. Print all RPG characters\n";
+    cout << "11. Clear RPG characters from treemap\n";
+    cout << "12. Print characters in order\n";
+    cout << "99. Exit\n";
 }
 
 int main() {
     BinaryTree<Pair<string, char>> tree;//Create a BinaryTree for storing words and their first letters
+
     TreeMap<string, vector<RPGCharacter>> treeMap;//Create a TreeMap for storing RPGCharacter by key
+
     FileReader fileReader;//FileReader object to load words from file
+
     bool treeLoaded = false;//Flag to check if words are loaded into the tree
     bool charactersLoaded = false;//Flag to check if characters are loaded into the TreeMap
 
@@ -149,8 +154,10 @@ int main() {
                     //For each entry, print the key (element/character_class) and all RPG characters associated with that key
                     cout << "Key: " << node->getItem().getFirst() << "\nCharacters:\n";
                     const vector<RPGCharacter>& characters = node->getItem().getSecond();
+
                     printf("%-5s %-15s %-10s %-15s %-5s %-10s\n",
                         "ID", "Name", "Element", "Class", "Level", "Legendary");//Headings
+
                     for (const RPGCharacter& character : characters) 
                     {
                         character.display();//Call the display method to print each character's details
@@ -164,7 +171,14 @@ int main() {
             }
             break;
         }
-        case 11:
+        case 11: {
+            //Clear the tree
+            treeMap.clear();
+            cout << "RPG Character Tree cleared.\n";
+            charactersLoaded = false;//Reset the flag
+            break;
+        }
+        case 99:
             cout << "Exiting program.\n";
             return 0;//Exit the program
         default:
