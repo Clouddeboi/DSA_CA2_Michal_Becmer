@@ -26,4 +26,6 @@ public:
     //Method to find RPG characters by the specified field (e.g., element or character class)
     //Searches within the TreeMap based on the index 
     void findCharactersByIndex(const string& key, TreeMap<string, vector<RPGCharacter>>& tree);
+
+    void printCharactersByFieldUsingPrintInOrder(TreeMap<std::string, std::vector<RPGCharacter>>& treeMap, const std::string& keyField);
 };

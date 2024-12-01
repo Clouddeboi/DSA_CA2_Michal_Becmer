@@ -58,4 +58,27 @@ public:
 
     bool getIsLegendary() const;//Returns whether the character is legendary
     void setIsLegendary(bool isLegendary);//Sets the character's legendary status
+
+    friend ostream& operator<<(ostream& out, const RPGCharacter& character) {
+        printf("| %-15s | %-20s | %-15s | %-20s | %-15s | %-10s |\n",
+            to_string(character.id).c_str(),
+            character.name.c_str(),
+            character.element.c_str(),
+            character.characterClass.c_str(),
+            to_string(character.level).c_str(),
+            character.isLegendary ? "TRUE" : "FALSE");
+
+        return out;
+    }
 };
+
+// Add this to RPGCharacter.h, outside the RPGCharacter class
+inline ostream& operator<<(ostream& out, const vector<RPGCharacter>& characters) {
+    for (const auto& character : characters) {
+        out << character << ", "; // Print each RPGCharacter followed by a comma
+    }
+    return out;
+}
+
+
+

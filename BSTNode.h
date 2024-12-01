@@ -1,91 +1,197 @@
 #pragma once
 #include <iostream>
-#include "Pair.h"
 
+using namespace std;
 template <class T>
-class BSTNode {
-private:
-    T item;//Now stores Pair<K, V>
-    BSTNode<T>* left;
-    BSTNode<T>* right;
+class BSTNode
+{
+
+	BSTNode<T>* parent;
+	BSTNode<T>* left;
+	BSTNode<T>* right;
+	T data;
 
 public:
-    BSTNode();//Default constructor
-    BSTNode(const T& item);//Constructor
+	BSTNode();
+	BSTNode(const BSTNode<T>& other);
+	BSTNode<T>* operator=(const BSTNode<T>& other);
+	BSTNode(T data);
+	void setItem(T item);
+	int count();
+	void add(const T& item);
+	BSTNode<T>* getParent();
+	BSTNode<T>* getLeft();
+	BSTNode<T>* getRight();
+	void setLeft(BSTNode<T>* l);
+	void setRight(BSTNode<T>* r);
+	T& getItem();
+	~BSTNode();
 
-    void setItem(const T& item);// Set item
-    T& getItem();//Get item
-    void setLeft(BSTNode<T>* left);//Set left child
-    void setRight(BSTNode<T>* right);//Set right child
-    BSTNode<T>* getLeft();//Get left child
-    BSTNode<T>* getRight();//Get right child
-
-    void add(const T& item);//Add item recursively
-    int count();//Count nodes in the subtree
 };
 
 template <class T>
-BSTNode<T>::BSTNode() : left(nullptr), right(nullptr) {}
+
+BSTNode<T>::BSTNode(const BSTNode<T>& other)
+
+{
+
+	left = right = nullptr;
+
+	if (other.left != nullptr)
+
+		this->left = new BSTNode<T>(*other.left);
+
+	if (other.right != nullptr)
+
+		this->right = new BSTNode<T>(*other.right);
+
+	this->data = other.data;
+
+}
+
+
 
 template <class T>
-BSTNode<T>::BSTNode(const T& item) : item(item), left(nullptr), right(nullptr) {}
+
+BSTNode<T>* BSTNode<T>::operator=(const BSTNode<T>& other)
+
+{
+
+	if (this == &other)
+
+		return *this;
+
+	left = right = nullptr;
+
+	if (other.left != nullptr)
+
+		this->left = new BSTNode<T>(*other.left);
+
+	if (other.right != nullptr)
+
+		this->right = new BSTNode<T>(*other.right);
+
+	this->data = other.data;
+
+}
+template <class T>
+BSTNode<T>::~BSTNode()
+{
+	if (left != nullptr)
+	{
+		delete left;
+		left = nullptr;
+	}
+	if (right != nullptr)
+	{
+		delete right;
+		right = nullptr;
+	}
+
+}
+template <class T>
+T& BSTNode<T>::getItem()
+{
+	return this->data;
+}
+template <class T>
+BSTNode<T>* BSTNode<T>::getLeft()
+{
+	return this->left;
+}
+template <class T>
+BSTNode<T>* BSTNode<T>::getRight()
+{
+	return this->right;
+}
+template <class T>
+BSTNode<T>* BSTNode<T>::getParent()
+{
+	return this->parent;
+}
+template <class T>
+void BSTNode<T>::setLeft(BSTNode<T>* l)
+{
+	this->left = l;
+}
+template <class T>
+void BSTNode<T>::setRight(BSTNode<T>* r)
+{
+	this->right = r;
+}
+
 
 template <class T>
-void BSTNode<T>::setItem(const T& item) {
-    this->item = item;
+BSTNode<T>::BSTNode()
+{
+	parent = nullptr;
+	left = nullptr;
+	right = nullptr;
+}
+
+
+template <class T>
+BSTNode<T>::BSTNode(T data)
+{
+	parent = nullptr;
+	left = nullptr;
+	right = nullptr;
+	this->data = data;
+}
+template <class T>
+int BSTNode<T>::count()
+{
+	int c = 1;
+	if (left != nullptr)
+	{
+		c += left->count();
+	}
+	if (right != nullptr)
+	{
+		c += right->count();
+	}
+	return c;
 }
 
 template <class T>
-T& BSTNode<T>::getItem() {
-    return item;
+void BSTNode<T>::add(const T& item)
+{
+	if (item == this->data)
+	{
+		return;
+	}
+	else if (item < this->data)
+	{
+		if (left == nullptr)
+		{
+			left = new BSTNode<T>();
+			left->data = item;
+			left->parent = this;
+		}
+		else
+		{
+			left->add(item);
+		}
+	}
+	else
+	{
+		if (right == nullptr)
+		{
+			right = new BSTNode<T>();
+			right->data = item;
+			right->parent = this;
+		}
+		else
+		{
+			right->add(item);
+		}
+	}
 }
 
 template <class T>
-void BSTNode<T>::setLeft(BSTNode<T>* left) {
-    this->left = left;
+void BSTNode<T>::setItem(T item)
+{
+	this->data = item;
 }
 
-template <class T>
-void BSTNode<T>::setRight(BSTNode<T>* right) {
-    this->right = right;
-}
 
-template <class T>
-BSTNode<T>* BSTNode<T>::getLeft() {
-    return left;
-}
-
-template <class T>
-BSTNode<T>* BSTNode<T>::getRight() {
-    return right;
-}
-
-//Add item to the tree recursively, comparing based on the key of Pair
-template <class T>
-void BSTNode<T>::add(const T& item) {
-    if (item < this->item) {//Compare based on the key
-        if (left == nullptr) {
-            left = new BSTNode<T>(item);//Add to the left if null
-        }
-        else {
-            left->add(item);//else recurse the method
-        }
-    }
-    else {
-        if (right == nullptr) {
-            right = new BSTNode<T>(item);//Add to the right if null
-        }
-        else {
-            right->add(item);//else recurse the method
-        }
-    }
-}
-
-//Count the number of nodes in the subtree
-template <class T>
-int BSTNode<T>::count() {
-    int count = 1;
-    if (left != nullptr) count += left->count();
-    if (right != nullptr) count += right->count();
-    return count;
-}

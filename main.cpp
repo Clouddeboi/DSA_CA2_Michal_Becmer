@@ -128,7 +128,9 @@ int main() {
             string keyField;
             cout << "Enter key field for characters (name/element/character_class/level): ";
             cin >> keyField;//Allow user to choose key field
+
             fileReader.loadCharactersToTree(characterFile, treeMap, keyField);
+
             charactersLoaded = true;
             cout << "Characters loaded successfully into the TreeMap.\n";
             cout << "TreeMap size: " << treeMap.size() << endl;
@@ -138,12 +140,12 @@ int main() {
             //Traverse the TreeMap in order
             if (charactersLoaded)
             {
-                cout << "In-order Traversal of TreeMap:\n";
-                treeMap.traverseInOrder([](BSTNode<Pair<string, vector<RPGCharacter>>>* node) {
-                    //For each node in TreeMap, print the key (string) and the size of the vector of RPGCharacters
-                    cout << "Key: " << node->getItem().getFirst() << ", Size: "
-                        << node->getItem().getSecond().size() << endl;
-                    });
+                //cout << "In-order Traversal of TreeMap:\n";
+                //treeMap.traverseInOrder([](BSTNode<Pair<string, vector<RPGCharacter>>>* node) {
+                //    //For each node in TreeMap, print the key (string) and the size of the vector of RPGCharacters
+                //    cout << "Key: " << node->getItem().getFirst() << ", Size: "
+                //        << node->getItem().getSecond().size() << endl;
+                //    });
             }
             else
             {
@@ -155,20 +157,7 @@ int main() {
             //Print all RPG characters
             if (charactersLoaded) 
             {
-                cout << "Printing all RPG characters:\n";
-                treeMap.traverseInOrder([](BSTNode<Pair<string, vector<RPGCharacter>>>* node) {
-                    //For each entry, print the key (element/character_class) and all RPG characters associated with that key
-                    cout << "Key: " << node->getItem().getFirst() << "\nCharacters:\n";
-                    const vector<RPGCharacter>& characters = node->getItem().getSecond();
-
-                    printHeadings();
-
-                    for (const RPGCharacter& character : characters) 
-                    {
-                        character.display();//Call the display method to print each character's details
-                    }
-                    cout << endl;
-                    });
+                treeMap.printInOrder();
             }
             else 
             {
@@ -186,16 +175,27 @@ int main() {
         case 12: {
             if (charactersLoaded)
             {
-                string index;//The index (has to be the full word, for example "Druid")
+                //string index;//The index (has to be the full word, for example "Druid")
 
-                cout << "Enter the full word/number of the Characyer name, element, Character class or level to search for characters: \n";
-                cin >> index;//User inputs the index
+                //cout << "Enter the full word/number of the Character name, element, Character class or level to search for characters: \n";
+                //cin >> index;//User inputs the index
 
-                //prints headings
-                printHeadings();
+                ////prints headings
+                //printHeadings();
 
-                //Call the method to find characters by the specified index
-                fileReader.findCharactersByIndex(index, treeMap);
+                ////Call the method to find characters by the specified index
+                //fileReader.findCharactersByIndex(index, treeMap);
+            }
+            else
+            {
+                cout << "TreeMap is empty. Load characters first.\n";
+            }
+            break;
+        }
+        case 13: {
+            if (charactersLoaded)
+            {
+                treeMap.printInOrder();
             }
             else
             {
@@ -212,4 +212,4 @@ int main() {
     }
 
     return 0;
-}
+};

@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+using namespace std;
+
 template <class K, class V>
 class Pair {
 private:
@@ -35,10 +37,10 @@ public:
     //Equality check based on the key
     bool operator==(const Pair<K, V>& other) const;
 
-    //Define the << operator for output
-    friend std::ostream& operator<<(std::ostream& os, const Pair<K, V>& p) {
-        os << "(" << p.first << ", " << p.second << ")";
-        return os;
+    //Output stream operator for Pair
+    friend ostream& operator<<(ostream& out, const Pair<K, V>& other) {
+        out << other.first << other.second; //Print key and value
+        return out;
     }
 };
 
@@ -55,41 +57,41 @@ Pair<K, V>::Pair(K first, V second) : first(first), second(second) {}
 //Getter for the key
 template <class K, class V>
 K& Pair<K, V>::getFirst() {
-    return first;//Return reference to the key
+    return first; //Return reference to the key
 }
 
 //Getter for the value
 template <class K, class V>
 V& Pair<K, V>::getSecond() {
-    return second;//Return reference to the value
+    return second; //Return reference to the value
 }
 
 //Setter for the key
 template <class K, class V>
 void Pair<K, V>::setFirst(const K& first) {
-    this->first = first;//Set the key
+    this->first = first; //Set the key
 }
 
 //Setter for the value
 template <class K, class V>
 void Pair<K, V>::setSecond(const V& second) {
-    this->second = second;//Set the value
+    this->second = second; //Set the value
 }
 
 //Comparison based on the key (less than)
 template <class K, class V>
 bool Pair<K, V>::operator<(const Pair<K, V>& other) const {
-    return this->first < other.first;//Compare based on the key
+    return this->first < other.first; //Compare based on the key
 }
 
 //Comparison based on the key (greater than)
 template <class K, class V>
 bool Pair<K, V>::operator>(const Pair<K, V>& other) const {
-    return this->first > other.first;//Compare based on the key
+    return this->first > other.first; //Compare based on the key
 }
 
 //Equality check based on the key
 template <class K, class V>
 bool Pair<K, V>::operator==(const Pair<K, V>& other) const {
-    return this->first == other.first;//Equality based on the key
+    return this->first == other.first; //Equality based on the key
 }

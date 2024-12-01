@@ -92,6 +92,10 @@ void FileReader::loadCharactersToTree(const string& filename, TreeMap<string, ve
         {
             key = to_string(level);//Converts level to string for the TreeMap key
         }
+        else if (keyField == "legendary")
+        {
+            key = isLegendary ? "TRUE" : "FALSE";//Using "TRUE" or "FALSE" as key
+        }
         else 
         {
             //Error if the key doesn't match
@@ -122,6 +126,13 @@ void FileReader::findCharactersByIndex(const string& index, TreeMap<string, vect
                         || character.getName() == index || to_string(character.getLevel()) == index)
                     {
                         character.display();//Display character's information
+                    }
+                    if (index == "TRUE" || index == "FALSE")
+                    {
+                        if(character.getIsLegendary() == (index == "TRUE") || (!character.getIsLegendary() && index == "FALSE"))
+                        {
+                            character.display();
+                        }
                     }
                 }
             }
