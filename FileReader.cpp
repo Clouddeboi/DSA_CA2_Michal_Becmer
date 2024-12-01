@@ -84,6 +84,14 @@ void FileReader::loadCharactersToTree(const string& filename, TreeMap<string, ve
         {
             key = characterClass;
         }
+        else if (keyField == "name")
+        {
+            key = name;
+        }
+        else if (keyField == "level")
+        {
+            key = to_string(level);//Converts level to string for the TreeMap key
+        }
         else 
         {
             //Error if the key doesn't match
@@ -110,7 +118,8 @@ void FileReader::findCharactersByIndex(const string& index, TreeMap<string, vect
                 //Search for characters within the vector whose field exactly matches the word
                 for (const auto& character : node->getItem().getSecond())
                 {
-                    if (character.getElement() == index || character.getCharacterClass() == index)
+                    if (character.getElement() == index || character.getCharacterClass() == index 
+                        || character.getName() == index || to_string(character.getLevel()) == index)
                     {
                         character.display();//Display character's information
                     }

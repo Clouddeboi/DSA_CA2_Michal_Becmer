@@ -29,6 +29,11 @@ void printMenu() {
     cout << "99. Exit\n";
 }
 
+void printHeadings() {
+    printf("%-5s %-15s %-10s %-15s %-5s %-10s\n",
+        "ID", "Name", "Element", "Class", "Level", "Legendary Status");
+}
+
 int main() {
     BinaryTree<Pair<string, char>> tree;//Create a BinaryTree for storing words and their first letters
 
@@ -121,7 +126,7 @@ int main() {
         case 8: {
             //Load characters from a CSV file into the TreeMap, using "element" or "character_class" as the key
             string keyField;
-            cout << "Enter key field for characters (element/character_class): ";
+            cout << "Enter key field for characters (name/element/character_class/level): ";
             cin >> keyField;//Allow user to choose key field
             fileReader.loadCharactersToTree(characterFile, treeMap, keyField);
             charactersLoaded = true;
@@ -156,8 +161,7 @@ int main() {
                     cout << "Key: " << node->getItem().getFirst() << "\nCharacters:\n";
                     const vector<RPGCharacter>& characters = node->getItem().getSecond();
 
-                    printf("%-5s %-15s %-10s %-15s %-5s %-10s\n",
-                        "ID", "Name", "Element", "Class", "Level", "Legendary");//Headings
+                    printHeadings();
 
                     for (const RPGCharacter& character : characters) 
                     {
@@ -184,8 +188,11 @@ int main() {
             {
                 string index;//The index (has to be the full word, for example "Druid")
 
-                cout << "Enter the full word of the element or character class to search for characters: ";
+                cout << "Enter the full word/number of the Characyer name, element, Character class or level to search for characters: \n";
                 cin >> index;//User inputs the index
+
+                //prints headings
+                printHeadings();
 
                 //Call the method to find characters by the specified index
                 fileReader.findCharactersByIndex(index, treeMap);
